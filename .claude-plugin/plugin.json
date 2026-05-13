@@ -1,0 +1,9 @@
+{
+  "name": "github-mcp",
+  "description": "Self-hosted GitHub MCP server. PAT auth, stdio transport, transport-agnostic so it works with Claude Code (any account), Codex CLI, Cursor, or any MCP-compliant client.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Mycelium AI",
+    "url": "https://myceliumai.co"
+  }
+}
