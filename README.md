@@ -50,7 +50,27 @@ The server reads the GitHub PAT from environment, in this precedence:
 1. `GITHUB_TOKEN`
 2. `GH_TOKEN`
 
-Fine-grained tokens recommended. Minimum scopes for the v0.1 tool surface: `repo`, `workflow`. For Dependabot alert reads on private repos, also grant `security_events`.
+Fine-grained tokens recommended.
+
+### Scope matrix
+
+| Permission | Access | Unlocks |
+|---|---|---|
+| Metadata | Read | Baseline (auto-required when any other repo permission is set) |
+| Contents | Read and write | `get_file`, `put_file` |
+| Pull requests | Read and write | `list_prs`, `get_pr`, `merge_pr` |
+| Dependabot alerts | Read | `list_dependabot_alerts` |
+| Administration | Read and write | Future: rulesets, branch protection, `allow_auto_merge` toggle |
+| Workflows | Read and write | Future: read/update `.github/workflows/*.yml` |
+| Actions | Read and write | Future: trigger and inspect workflow runs |
+| Secret scanning alerts | Read | Future: fleet-wide secret-scan sweep |
+| Code scanning alerts | Read | Future: CodeQL fleet sweep |
+
+**v0.1 floor**: Metadata + Contents (R/W) + Pull requests (R/W) + Dependabot alerts (R) is enough to use every tool in this release.
+
+**Future-proof**: granting the full table now means new MCP tools can ship without rotating the PAT. Equivalent to checking "all repository permissions" in the fine-grained PAT UI. Trade-off: broader blast radius if the token leaks. Reasonable for a personal-dev token on an encrypted laptop with FileVault; reconsider for shared or production deployments.
+
+The MCP introspects scopes via `health_check` — call it after wiring up to confirm what your token actually has.
 
 Optional: `GITHUB_API_BASE` for GitHub Enterprise Server. Defaults to `https://api.github.com`.
 
