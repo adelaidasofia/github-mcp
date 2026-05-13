@@ -30,6 +30,13 @@ Future versions expand: workflows, releases, issues, rulesets, secret-scan alert
 
 ## Install
 
+Open Claude Code, paste:
+
+    /plugin marketplace add adelaidasofia/github-mcp
+    /plugin install github-mcp@github-mcp
+
+<details><summary>Legacy install</summary>
+
 ```bash
 git clone https://github.com/adelaidasofia/github-mcp ~/.claude/github-mcp
 cd ~/.claude/github-mcp
@@ -42,6 +49,8 @@ Or as a one-off without persistent install:
 cd ~/.claude/github-mcp
 uv run github-mcp
 ```
+
+</details>
 
 ## Auth
 
