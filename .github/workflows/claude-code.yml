@@ -2,9 +2,14 @@ name: Claude Code
 # Per anthropic-org Phase 5 audit (2026-05-13): claude-code-action adopted as
 # PoC on github-mcp first. Triggers on @claude mention in PR/issue comments.
 #
-# Setup: requires CLAUDE_CODE_OAUTH_TOKEN OR ANTHROPIC_API_KEY repo secret.
-# Repo admin must also install the GitHub app:
-#   claude  →  /install-github-app
+# Per CLAUDE.md "Auth routing: Max → NVIDIA → API key" rule (2026-05-10):
+# uses CLAUDE_CODE_OAUTH_TOKEN (Max plan, zero per-token cost) NOT
+# ANTHROPIC_API_KEY (Tier 3 paid fallback).
+#
+# Setup: requires CLAUDE_CODE_OAUTH_TOKEN repo secret.
+#   1. Run `claude setup-token` locally to mint a long-lived token
+#   2. Set as repo secret: `gh secret set CLAUDE_CODE_OAUTH_TOKEN -R adelaidasofia/<repo>`
+#   3. Repo admin also installs the GitHub app: `claude → /install-github-app`
 
 on:
   issue_comment:
@@ -38,4 +43,4 @@ jobs:
 
       - uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
