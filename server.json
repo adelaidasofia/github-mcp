@@ -11,12 +11,12 @@
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/adelaidasofia/github-mcp/releases/latest/download/github-mcp.mcpb",
+      "identifier": "https://github.com/adelaidasofia/github-mcp/releases/download/v0.1.0/github-mcp.mcpb",
       "version": "0.1.0",
       "transport": {
         "type": "stdio"
       },
-      "fileSha256": "f666e785caa7ae1afa641e054b4ceb885e2a72bb14e25646a20de8b6134b52c3",
+      "fileSha256": "cab8ee1d6d3d4d65fedc98ba81bf9fb9f0a8272949a9e73aaf906f3daacf68fa",
       "environmentVariables": [
         {
           "name": "GITHUB_TOKEN",

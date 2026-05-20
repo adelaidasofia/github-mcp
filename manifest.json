@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "description": "Self-hosted GitHub MCP server. PAT auth, stdio transport, transport-agnostic so it works with Claude Code (any account), Codex CLI, Cursor, or any MCP-compliant client.",
   "author": {
-    "name": "Adelaida Diaz-Roa",
+    "name": "adelaidasofia",
     "url": "https://github.com/adelaidasofia"
   },
   "repository": {
