@@ -28,6 +28,40 @@ If neither applies, run `github/github-mcp-server` instead — that's the right 
 
 Future versions expand: workflows, releases, issues, rulesets, secret-scan alerts, branch protection, repo settings.
 
+## Secret hygiene (read this first)
+
+**v0.1.1+ reads the PAT from macOS Keychain by default.** Env-var fallback is still supported for non-macOS / CI, but the Keychain path is the recommended setup because the secret never enters argv or process env — safe from `ps aux`, `pgrep -fl`, `lsof`, `/proc/<pid>/environ`, panic dumps, CI logs, debuggers, or any LLM agent running an introspection command.
+
+```bash
+# One-time setup (macOS):
+security add-generic-password -s github-mcp -a "$USER" -w "<your-fine-grained-PAT>"
+
+# Update later (e.g. after rotation):
+security delete-generic-password -s github-mcp -a "$USER" 2>/dev/null
+security add-generic-password -s github-mcp -a "$USER" -w "<new-PAT>"
+```
+
+**Do NOT** install with an inline `--env`:
+
+```bash
+# BAD — bakes the PAT into ~/.claude.json + every Claude child spawn's --mcp-config argv.
+# Any pgrep / ps aux dumps it.
+claude mcp add github --scope user --env GITHUB_TOKEN=github_pat_... -- <command>
+
+# GOOD — no --env block. The server reads from Keychain at call time.
+claude mcp add github --scope user -- <command>
+```
+
+PR/incident lineage: this hygiene path was added 2026-05-19 after a `pgrep -fl chrome-devtools-mcp` dumped a PAT-bearing claude process into a session transcript. See [adelaidasofia/github-mcp Keychain migration]() (TODO: link PR once merged).
+
+For non-macOS environments, fall back to env:
+
+```bash
+export GITHUB_TOKEN=<your-PAT>   # set in shell rc, NOT in argv
+```
+
+Minimum scopes for the v0.1 tool surface: Contents R/W, Pull requests R/W, Dependabot R.
+
 ## Install
 
 Open Claude Code, paste:
