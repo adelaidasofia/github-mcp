@@ -8,3 +8,5 @@ __pycache__/
 .ruff_cache/
 dist/
 build/
+# Generated MCP bundle (uploaded to GitHub Releases, not tracked in git)
+*.mcpb

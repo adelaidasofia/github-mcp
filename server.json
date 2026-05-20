@@ -16,6 +16,7 @@
       "transport": {
         "type": "stdio"
       },
+      "fileSha256": "f666e785caa7ae1afa641e054b4ceb885e2a72bb14e25646a20de8b6134b52c3",
       "environmentVariables": [
         {
           "name": "GITHUB_TOKEN",
