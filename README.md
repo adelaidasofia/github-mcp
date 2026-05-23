@@ -1,5 +1,20 @@
 # github-mcp
 
+
+<!-- mycelium-badges:start -->
+
+<p>
+  <a href="https://github.com/adelaidasofia/github-mcp/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/adelaidasofia/github-mcp?color=blue"></a>
+  <a href="https://github.com/adelaidasofia/github-mcp/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/adelaidasofia/github-mcp?color=eab308"></a>
+  <a href="https://github.com/adelaidasofia/github-mcp/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/adelaidasofia/github-mcp"></a>
+  <a href="https://github.com/adelaidasofia/github-mcp/issues"><img alt="Open issues" src="https://img.shields.io/github/issues/adelaidasofia/github-mcp"></a>
+  <a href="https://pypi.org/project/adelaidasofia-github-mcp/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/adelaidasofia-github-mcp?color=blue&label=pypi"></a>
+  <a href="https://pypi.org/project/adelaidasofia-github-mcp/"><img alt="PyPI downloads" src="https://img.shields.io/pypi/dm/adelaidasofia-github-mcp?color=blue&label=downloads"></a>
+  <a href="https://myceliumai.co"><img alt="Built by Mycelium AI" src="https://img.shields.io/badge/built_by-Mycelium_AI-15B89A"></a>
+</p>
+
+<!-- mycelium-badges:end -->
+
 Self-hosted GitHub MCP server. Personal-access-token auth, stdio transport, transport-agnostic so it works with Claude Code (any account), Codex CLI, Cursor, or any MCP-compliant client. No claude.ai OAuth dependency.
 
 Written in Python on top of FastMCP. Slots into the same install pattern as other community Python MCP servers.
