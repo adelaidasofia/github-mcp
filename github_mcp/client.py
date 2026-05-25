@@ -26,8 +26,11 @@ import base64
 import os
 import subprocess
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
+
+from mycelium_security import UnsafeURL, assert_public_ip, sanitize_or_raise
 
 
 def _get_token_from_keychain() -> str | None:
@@ -107,14 +110,25 @@ async def request(
     Path may be absolute (https://...) or relative (/repos/...); both work.
     """
     url = path if path.startswith("http") else f"{_base_url()}{path if path.startswith('/') else '/' + path}"
+
+    # SSRF hardening (MYC-101): sanitize URL chars/scheme, assert public IP,
+    # block 3xx redirects (a redirect could land on a private/metadata IP and
+    # bypass the IP check).
+    try:
+        safe_url = sanitize_or_raise(url)
+        host = urlparse(safe_url).hostname or ""
+        assert_public_ip(host)
+    except UnsafeURL as exc:
+        raise RuntimeError(f"github-mcp refused (SSRF): {exc}") from exc
+
     headers = _headers()
     if accept:
         headers["Accept"] = accept
 
-    async with httpx.AsyncClient(timeout=30.0) as cx:
+    async with httpx.AsyncClient(timeout=30.0, follow_redirects=False) as cx:
         return await cx.request(
             method,
-            url,
+            safe_url,
             headers=headers,
             params=params,
             json=json_body,
